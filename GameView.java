@@ -1,4 +1,4 @@
-package com.projects.ancientlore.Lines;
+package com.ancientlore.lines;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -29,6 +29,7 @@ class GameView extends SurfaceView implements Runnable{
     private SoundManager soundManager;
     Bitmap tile,tile2;
     public static int globalPadding;
+    public static int gridPadding;
     public static int cellSize;
     public static int upperPanelYSize;
     private Rect gridContour;
@@ -73,11 +74,12 @@ class GameView extends SurfaceView implements Runnable{
 
         soundManager = new SoundManager();
         soundManager.loadSound(context);
-        globalPadding = this.screenY / 50;
-        upperPanelYSize=this.screenY / 12;
+        globalPadding = screenY / 50;
+        upperPanelYSize=screenY / 12;
         cellSize = (this.screenX - globalPadding * 2) / matrixSize;
-        gridContour = new Rect(globalPadding, upperPanelYSize+globalPadding,
-                cellSize*matrixSize + globalPadding, upperPanelYSize+ globalPadding+cellSize*matrixSize );
+        gridPadding = (screenY-upperPanelYSize-cellSize*matrixSize)/2;
+        gridContour = new Rect(globalPadding, upperPanelYSize+gridPadding,
+                cellSize*matrixSize + globalPadding, upperPanelYSize+ gridPadding+cellSize*matrixSize );
         tile = BitmapFactory.decodeResource
                 (context.getResources(), R.drawable.lines_tile);
         tile =  Bitmap.createScaledBitmap(tile,
@@ -100,8 +102,8 @@ class GameView extends SurfaceView implements Runnable{
             }
         for (int i=0;i<matrixSize;i++)
             for (int j=0;j<matrixSize;j++){
-                matrix[i][j]=new Cell(new Rect(globalPadding+cellSize*i,upperPanelYSize+globalPadding+cellSize*j,
-                        globalPadding+cellSize*(i+1),upperPanelYSize+globalPadding+cellSize*(j+1)));
+                matrix[i][j]=new Cell(new Rect(globalPadding+cellSize*i,upperPanelYSize+gridPadding+cellSize*j,
+                        globalPadding+cellSize*(i+1),upperPanelYSize+gridPadding+cellSize*(j+1)));
             }
         path=new Point[1];
         path[0]=new Point(0,0);
@@ -483,7 +485,7 @@ class GameView extends SurfaceView implements Runnable{
             case MotionEvent.ACTION_UP:
                 if (gridContour.contains(touchX,touchY)) {
                     if (!isBallSelected) {
-                        selectedCell.set((touchX-globalPadding)/cellSize,(touchY-globalPadding-upperPanelYSize)/cellSize);
+                        selectedCell.set((touchX-globalPadding)/cellSize,(touchY-gridPadding-upperPanelYSize)/cellSize);
                         if (matrix[selectedCell.x][selectedCell.y].rect.contains(touchX,touchY) &&
                                 matrix[selectedCell.x][selectedCell.y].getBall().getColor()>='a' &&
                                 matrix[selectedCell.x][selectedCell.y].getBall().getColor()<='z') {
@@ -493,7 +495,7 @@ class GameView extends SurfaceView implements Runnable{
                         }
                     } else{
                         isCellSelected = true;
-                        selectedCell.set((touchX-globalPadding)/cellSize,(touchY-globalPadding-upperPanelYSize)/cellSize);
+                        selectedCell.set((touchX-globalPadding)/cellSize,(touchY-gridPadding-upperPanelYSize)/cellSize);
                         if (matrix[selectedCell.x][selectedCell.y].rect.contains(touchX,touchY) &&
                                 matrix[selectedCell.x][selectedCell.y].getBall().getColor()>='a' &&
                                 matrix[selectedCell.x][selectedCell.y].getBall().getColor()<='z') {

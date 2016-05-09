@@ -1,4 +1,4 @@
-package com.projects.ancientlore.Lines;
+package com.ancientlore.lines;
 
 import android.app.Activity;
 import android.graphics.Point;
