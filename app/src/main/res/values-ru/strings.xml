@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_apply">Применить</string>
+    <string name="button_new_game">Новая Игра</string>
+    <string name="button_play">Играть!</string>
+    <string name="button_resume">Продолжить</string>
+    <string name="button_settings">Настройки</string>
+    <string name="cb_grid">Сетке</string>
+    <string name="label_show_next_balls">Показывать следующие шарики на:</string>
+    <string name="cb_panel">Панели</string>
+    <string name="hiscore_label">Лучший счёт:</string>
+    <string name="ingame_score">Счёт</string>
+</resources>
